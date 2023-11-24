@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물류센터</title>
+    <style>
+        body
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header
+        {
+            background-color: #fff;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .user-menu
+        {
+            text-align: right;
+        }
+        .user-menu a
+        {
+            text-decoration: none;
+            color: #000;
+        }
+        .user-menu a:hover
+        {
+            color: #e4827d;
+        }
+        .user-info
+        {
+            text-align: left;
+            color: #000;
+        }
+        .top-section
+        {
+            background-color: #e66660;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        }
+        nav
+        {
+            background-color: #fff;
+            border-bottom: 3px solid #ee2e24;
+        }
+        nav ul
+        {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        nav li
+        {
+            display: inline;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+        nav a
+        {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+        nav a:hover
+        {
+            color: #e4827d;
+        }
+        main
+        {
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+        .title
+        {
+            border: 1px solid rgb(231, 225, 225);
+            border-radius: 30px;
+            width: 700px;
+            height: 100px;
+            margin: 0 auto;
+            margin-top: 30px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+        .title p
+        {
+            font-size: 50px;
+            text-align: center;
+            position: relative;
+            top: -35px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        }
+        .list
+        {
+            border: 1px solid white;
+            width: 1500px;
+            height: 650px;
+            margin: 0 auto;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 30px;
+            font-size: 16px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #e66660;
+            color: #fff;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="user-info">
+        <b></b>
+    </div>
+    <div class="user-menu">
+        <a href="/distribution/index"><b>로그아웃</b></a>
+    </div>
+</header>
+<div class="top-section">
+    <h1>물류센터</h1>
+</div>
+<nav>
+    <ul>
+        <li><a href="/distribution/main">메인으로</a></li>
+    </ul>
+</nav>
+<main>
+    <div class="title">
+        <p><b>모든 물류 주문리스트</b></p>
+    </div>
+    <div class="list">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>로그인 ID</th>
+                <th>이름</th>
+                <th>생활용품</th>
+                <th>주방용품</th>
+                <th>식품</th>
+                <th>건강보조식품</th>
+                <th>화장품</th>
+            </tr>
+            </thead>
+            <tbody th:each="distribution : ${distributionlist}">
+                <td th:text="${distribution.id}">1</td>
+                <td th:text="${distribution.userid}">tjdmsdn0516</td>
+                <td th:text="${distribution.name}">서은우</td>
+                <td>
+                    <p th:text="${'입고 : ' + distribution.householdgoods_receiving}">입고</p>
+                    <p th:text="${'출하 : ' + distribution.householdgoods_release}">출하</p>
+                    <p th:text="${'현재 재고 수량 : ' + distribution.householdgoods_count}">현재 재고 수량</p>
+                    <p th:text="${'최대 재고 수량 : ' + distribution.householdgoods_maxcount}">최대 재고수량</p>
+                </td>
+                <td>
+                    <p th:text="${'입고 : ' + distribution.kitchentools_receiving}">입고</p>
+                    <p th:text="${'출하 : ' + distribution.kitchentools_release}">출하</p>
+                    <p th:text="${'현재 재고 수량 : ' + distribution.kitchentools_count}">현재 재고 수량</p>
+                    <p th:text="${'최대 재고 수량 : ' + distribution.kitchentools_maxcount}">최대 재고수량</p>
+                </td>
+                <td>
+                    <p th:text="${'입고 : ' + distribution.food_receiving}">입고</p>
+                    <p th:text="${'출하 : ' + distribution.food_release}">출하</p>
+                    <p th:text="${'현재 재고 수량 : ' + distribution.food_count}">현재 재고 수량</p>
+                    <p th:text="${'최대 재고 수량 : ' + distribution.food_maxcount}">최대 재고수량</p>
+                </td>
+                <td>
+                    <p th:text="${'입고 : ' + distribution.healthfood_receiving}">입고</p>
+                    <p th:text="${'출하 : ' + distribution.healthfood_release}">출하</p>
+                    <p th:text="${'현재 재고 수량 : ' + distribution.healthfood_count}">현재 재고 수량</p>
+                    <p th:text="${'최대 재고 수량 : ' + distribution.healthfood_maxcount}">최대 재고수량</p>
+                </td>
+                <td>
+                    <p th:text="${'입고 : ' + distribution.cosmetics_receiving}">입고</p>
+                    <p th:text="${'출하 : ' + distribution.cosmetics_release}">출하</p>
+                    <p th:text="${'현재 재고 수량 : ' + distribution.cosmetics_count}">현재 재고 수량</p>
+                    <p th:text="${'최대 재고 수량 : ' + distribution.cosmetics_maxcount}">최대 재고 수량</p>
+                </td>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

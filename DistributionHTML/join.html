@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물류센터</title>
+    <style>
+        body
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .top-section
+        {
+            background-color: #e66660;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        }
+        main
+        {
+            padding: 20px;
+        }
+        .title
+        {
+            border: 1px solid rgb(231, 225, 225);
+            border-radius: 30px;
+            width: 700px;
+            height: 100px;
+            margin: 0 auto;
+            margin-top: 30px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+        .title p
+        {
+            font-size: 50px;
+            text-align: center;
+            position: relative;
+            top: -35px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+            width: 300px; /* .container 너비 설정 */
+            margin: 0 auto; /* 가운데 정렬 */
+            margin-top: 100px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e66660;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #dd453d;
+        }
+    </style>
+</head>
+<body>
+<div class="top-section">
+    <h1>물류센터</h1>
+</div>
+<main>
+    <div class="container">
+        <h1>회원가입</h1>
+        <form action="/distribution/join" method="post">
+            <label for="userid">아이디</label>
+            <input type="text" id="userid" name="userid" placeholder="ID를 입력 해주세요">
+
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요">
+
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" placeholder="이름을 입력해주세요">
+
+            <label for="age">나이</label>
+            <input type="text" id="age" name="age" placeholder="나이를 입력해주세요">
+
+            <label for="address">주소</label>
+            <input type="text" id="address" name="address" placeholder="주소를 입력해주세요">
+
+            <label for="email">이메일</label>
+            <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요">
+
+            <button type="submit">가입하기</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

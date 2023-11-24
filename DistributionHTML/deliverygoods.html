@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물류센터</title>
+    <style>
+        body
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header
+        {
+            background-color: #fff;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .user-menu
+        {
+            text-align: right;
+        }
+        .user-menu a
+        {
+            text-decoration: none;
+            color: #000;
+        }
+        .user-menu a:hover
+        {
+            color: #e4827d;
+        }
+        .user-info
+        {
+            text-align: left;
+            color: #000;
+        }
+        .top-section
+        {
+            background-color: #e66660;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        }
+        nav
+        {
+            background-color: #fff;
+            border-bottom: 3px solid #ee2e24;
+        }
+        nav ul
+        {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        nav li
+        {
+            display: inline;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+        nav a
+        {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+        nav a:hover
+        {
+            color: #e4827d;
+        }
+        main
+        {
+            padding: 20px;
+        }
+        .title
+        {
+            border: 1px solid rgb(231, 225, 225);
+            border-radius: 30px;
+            width: 700px;
+            height: 100px;
+            margin: 0 auto;
+            margin-top: 30px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+        .title p
+        {
+            font-size: 50px;
+            text-align: center;
+            position: relative;
+            top: -35px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        }
+        .menulist {
+            margin-top: 100px;
+            margin-left: 630px;
+            margin-right: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-item {
+            width: 400px;
+            height: 450px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin: 10px;
+            text-align: center;
+            background-color: #f9f9f9;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+        }
+        .menu-item .item-image img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .menu-item p {
+            margin: 10px 0;
+            font-weight: bold;
+            font-size: 30px;
+        }
+        .imgitem
+        {
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="user-info">
+        <b th:text="'현재사용자 : [' + ${loginuserid} + ']'">현재 사용자: [사용자 이름]</b>
+    </div>
+    <div class="user-menu">
+        <a href="/distribution/index"><b>로그아웃</b></a>
+    </div>
+</header>
+<div class="top-section">
+    <h1>물류센터</h1>
+</div>
+<nav>
+    <ul>
+        <li><a href="/distribution/main">메인으로</a></li>
+    </ul>
+</nav>
+<main>
+    <div class="title">
+        <p><b>출하된 물류</b></p>
+    </div>
+    <div class="menulist" th:switch="${randomResult}">
+        <div class="menu-item" th:case="'생활용품'">
+            <div class="item-image">
+                <img src="/distributionimg/생활용품.jpg" class="imgitem">
+            </div>
+            <p>생활용품</p>
+            <p th:text="${countResult} + 'box가 출하 되었습니다'" th:if="${distribution.householdgoods_count > countResult && distribution.householdgoods_count > 0}">10box가 출하 되었습니다</p>
+            <p style="color:#ee2e24; font-size: 25px;" th:if="${error}">출하개수가 더 많을 수 없습니다</p>
+        </div>
+        <div class="menu-item" th:case="'주방용품'">
+            <div class="item-image">
+                <img src="/distributionimg/주방용품.jpg" class="imgitem">
+            </div>
+            <p>주방용품</p>
+            <p th:text="${countResult} + 'box가 출하 되었습니다'" th:if="${distribution.kitchentools_count > countResult && distribution.kitchentools_count > 0}">10box가 출하 되었습니다</p>
+            <p style="color:#ee2e24; font-size: 25px;" th:if="${error}">출하개수가 더 많을 수 없습니다</p>
+        </div>
+        <div class="menu-item"  th:case="'식품'">
+            <div class="item-image">
+                <img src="/distributionimg/식품.jpg" class="imgitem">
+            </div>
+            <p>식품</p>
+            <p th:text="${countResult} + 'box가 출하 되었습니다'" th:if="${distribution.food_count > countResult && distribution.food_count > 0}">10box가 출하 되었습니다</p>
+            <p style="color:#ee2e24; font-size: 25px;" th:if="${error}">출하개수가 더 많을 수 없습니다</p>
+        </div>
+        <div class="menu-item" th:case="'건강보조식품'">
+            <div class="item-image">
+                <img src="/distributionimg/건강보조식품.jpg" class="imgitem">
+            </div>
+            <p>건강보조식품</p>
+            <p th:text="${countResult} + 'box가 출하 되었습니다'" th:if="${distribution.healthfood_count > countResult && distribution.healthfood_count > 0}">10box가 출하 되었습니다</p>
+            <p style="color:#ee2e24; font-size: 25px;" th:if="${error}">출하개수가 더 많을 수 없습니다</p>
+        </div>
+        <div class="menu-item" th:case="'화장품'">
+            <div class="item-image">
+                <img src="/distributionimg/화장품.jpg" class="imgitem">
+            </div>
+            <p>화장품</p>
+            <p th:text="${countResult} + 'box가 출하 되었습니다'" th:if="${distribution.cosmetics_count > countResult && distribution.cosmetics_count > 0}">10box가 출하 되었습니다</p>
+            <p style="color:#ee2e24; font-size: 25px;" th:if="${error}">출하개수가 더 많을 수 없습니다</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

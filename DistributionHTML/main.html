@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물류센터</title>
+    <style>
+        body
+        {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header
+        {
+            background-color: #fff;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .user-menu
+        {
+            text-align: right;
+        }
+        .user-menu a
+        {
+            text-decoration: none;
+            color: #000;
+        }
+        .user-menu a:hover
+        {
+            color: #e4827d;
+        }
+        .user-info
+        {
+            text-align: left;
+            color: #000;
+        }
+        .top-section
+        {
+            background-color: #e66660;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        }
+        nav
+        {
+            background-color: #fff;
+            border-bottom: 3px solid #ee2e24;
+        }
+        nav ul
+        {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        nav li
+        {
+            display: inline;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+        nav a
+        {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+        nav a:hover
+        {
+            color: #e4827d;
+        }
+        main
+        {
+            padding: 20px;
+        }
+        .title
+        {
+            border: 1px solid rgb(231, 225, 225);
+            border-radius: 30px;
+            width: 700px;
+            height: 100px;
+            margin: 0 auto;
+            margin-top: 30px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+        .title p
+        {
+            font-size: 50px;
+            text-align: center;
+            position: relative;
+            top: -35px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        }
+        .menulist {
+            margin-top: 100px;
+            margin-left: 50px;
+            margin-right: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .menu-item {
+            width: 400px;
+            height: 350px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin: 10px;
+            text-align: center;
+            background-color: #f9f9f9;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item:nth-child(4),
+        .menu-item:nth-child(5) {
+            margin: 30px auto; /* 가로 중앙으로 이동 */
+        }
+
+        .menu-item .item-image img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .menu-item p {
+            margin: 10px 0;
+            font-weight: bold;
+            font-size: 30px;
+        }
+        .imgitem
+        {
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="user-info">
+        <b th:text="'현재사용자 : [' + ${loginuserid} + ']'">현재 사용자: [사용자 이름]</b>
+    </div>
+    <div class="user-menu">
+        <a href="/distribution/index"><b>로그아웃</b></a>
+    </div>
+</header>
+<div class="top-section">
+    <h1>물류센터</h1>
+</div>
+<nav>
+    <ul>
+        <li><a th:href="@{'/distribution/receivinggoods/' + ${distribution.id}}">상품입고</a></li>
+        <li><a th:href="@{'/distribution/deliverygoods/' + ${distribution.id}}">상품출하</a></li>
+        <li><a th:href="@{'/distribution/myorderlist/' + ${distribution.id}}">내 주문관리</a></li>
+        <li><a href="/distribution/allorderlist">전체 주문리스트</a></li>
+    </ul>
+</nav>
+<main>
+    <div class="title">
+        <p><b>물류 리스트</b></p>
+    </div>
+    <div class="menulist">
+        <div class="menu-item">
+            <div class="item-image">
+                <img src="/distributionimg/생활용품.jpg" class="imgitem">
+            </div>
+            <p>생활용품</p>
+        </div>
+        <div class="menu-item">
+            <div class="item-image">
+                <img src="/distributionimg/주방용품.jpg" class="imgitem">
+            </div>
+            <p>주방용품</p>
+        </div>
+        <div class="menu-item">
+            <div class="item-image">
+                <img src="/distributionimg/식품.jpg" class="imgitem">
+            </div>
+            <p>식품</p>
+        </div>
+        <div class="menu-item">
+            <div class="item-image">
+                <img src="/distributionimg/건강보조식품.jpg" class="imgitem">
+            </div>
+            <p>건강보조식품</p>
+        </div>
+        <div class="menu-item">
+            <div class="item-image">
+                <img src="/distributionimg/화장품.jpg" class="imgitem">
+            </div>
+            <p>화장품</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>
