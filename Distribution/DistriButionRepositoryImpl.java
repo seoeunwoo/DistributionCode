@@ -119,6 +119,10 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
                 return loginid;
             }
         }
+
+        // Map에 저장된 데이터를 기준으로 userid와 password가 일치하는 곳의 key 값인 id값을 가져와서 loginId에 재할당
+        // 일치하는 데이터가 없으면 null을 반환
+
         return null;
     }
 
@@ -135,6 +139,9 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
 
             while (resultSet.next())
             {
+                // Distribution 객체에 new 연산자로 빈공간을 만들고
+                // db에 저장된 데이터를 각 Distribution 객체 필드 변수에 해당값을 담는 구조
+
                 DistriBution distriBution = new DistriBution();
                 distriBution.setId(resultSet.getLong("id"));
                 distriBution.setUserid(resultSet.getString("userid"));
@@ -211,6 +218,12 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
             items.remove(randomIndex);
             return result;
         }
+
+        // items가 비어있지 않으면 모든 데이터를 돌면서 값을 추출
+        // List에 저장된 데이터의 사이즈에 따라 랜덤으로 인덱스 번호를 하나 가져온다
+        // 예를들어 생활용품이 2번 인덱스에 위치 하고 랜덤으로 2번이 선택 됐으면
+        // 생활용품의 문자열이 추출되는 방식
+        // 방금 선택된 문자열은 제거 하고 나머지 남은 문자열 중에서 랜덤으로 선택함
         return null;
     }
 
@@ -219,9 +232,13 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
         Random random = new Random();
         int countResult = random.nextInt(20) + 1;
         System.out.println("랜덤으로 나온 물류개수 = " + countResult);
+
+        // 물류개수는 최소 1개 최대 20개 중 랜덤으로 물류개수를 추출함
+        // 추출된 값을 return으로 반환
         return countResult;
     }
 
+    
     @Override
     public void receivingdistribution(Long id, String distributionname, int distributioncount) {
         DistriBution distriBution = data.get(id);
@@ -230,13 +247,19 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
         {
             int currentHouseholdgoodsCount = distriBution.getHouseholdgoods_count();
 
+            // 현재 생활용품 개수
+
             if (currentHouseholdgoodsCount + distributioncount < HouseHoldGoodsMaxCount)
             {
                 Map<String, Integer> subdistributionCount = distributionCounts.get(id);
+
+                // 매개변수로 입력받은 아이디를 추가 Map의 key 값으로 전달
                 if (subdistributionCount == null)
                 {
                     subdistributionCount = new HashMap<>();
                     distributionCounts.put(id, subdistributionCount);
+
+                    // value 값은 비어있는 상태니 new 연산자로 sub Map에 빈 공간을 만들어서 데이터 저장
 
                     String SubHouseHoldGoodsSql = "insert into distribution_individual_count(id) values (?)";
 
@@ -261,6 +284,8 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
                 {
                     int currentCount = subdistributionCount.get(distributionname);
                     subdistributionCount.put(distributionname, currentCount + distributioncount);
+
+                    // 생활용품의 현재 개수를 가져와서 key 값으로 생활용품, value 값으로 현재 생활용품 개수에서 새로 들어온 개수를 + 해서 저장
 
                     String SubHouseHoldgoodsCountSql = "update distribution_individual_count set householdgoods_count = ? where id = ?";
 
@@ -292,6 +317,8 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
                 {
                     subdistributionCount.put(distributionname, distributioncount);
 
+                    // 데이터에 아무것도 없다면 key 값으로 생활용품, value 값으로 전달 받은 개수를 저장
+
                     String SubHouseHoldgoodsCountSql = "update distribution_individual_count set householdgoods_count = ? where id = ?";
 
                     try
@@ -322,6 +349,8 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
                 System.out.println();
                 distriBution.addhouseholdgoods_count(distributioncount);
                 distriBution.setHouseholdgoods_receiving(distriBution.getHouseholdgoods_receiving() + 1);
+
+                // Distribution 객체에 메소드를 이용해서 생활용품 개수와 입고 횟수를 + 1해서 저장
 
                 String HouseHoldGoodsSql = "update distribution set householdgoods_count = ?, householdgoods_receiving = ? where id = ?";
 
@@ -356,6 +385,9 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
                 int remainingCount = currentHouseholdgoodsCount + distributioncount - HouseHoldGoodsMaxCount;
                 distriBution.setHouseholdgoods_count(HouseHoldGoodsMaxCount);
                 subdistributionCount.put(distributionname, HouseHoldGoodsMaxCount);
+
+                // 재고가 꽉 찼을경우 현재 생활용품 개수에서 입력받은 개수를 더한 뒤 최대 재고 수량을 - 하면 몇 개가 초과 되었는지 나옴
+                // 최대 재고수량을 넘지 못하게 임의로 생활용품 개수를 최대 재고 수량으로 다시 저장
 
                 String HouseHoldGoodsMaxSql = "update distribution set householdgoods_count = ? where id = ?";
 
@@ -1055,11 +1087,18 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
                 int currentCount = subdistributionCount.get(distributionname);
                 System.out.println("생활용품 currentCount = " + currentCount);
 
+                // 생활용품의 Map이 null이 아니고 생활용품의 key값이 존재한다면
+                // key 값을 가져와서 현재 생활용품의 개수가 몇개인지 구함
+
                 if (currentCount >= distributioncount)
                 {
                     subdistributionCount.put(distributionname, currentCount - distributioncount); // 출하 개수만큼 빼줌
                     distriBution.minushouseholdgoods_count(distributioncount);
                     distriBution.setHouseholdgoods_release(distriBution.getHouseholdgoods_release() + 1);
+
+                    // 현재 생활용품 개수가 입력 받은 개수보다 크거나 같으면
+                    // 현재 생활용품 개수에서 입력 받은 개수를 빼주고
+                    // set 메소드를 이용해서 데이터 저장
 
                     String HouseHoldGoodsSql = "update distribution set householdgoods_count = ?, householdgoods_release = ? where id = ?";
 
@@ -1121,6 +1160,7 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
                 }
                 else
                 {
+                    // 현재 생활용품 개수가 입력 받은 개수보다 작으면 오류메세지 출력
                     System.out.println("출하 요청한 물류보다 현재 재고가 부족합니다");
                     System.out.println();
                     System.out.println(distributionCounts.toString());
@@ -1129,6 +1169,7 @@ public class DistriButionRepositoryImpl implements DistriButionRepository{
             }
             else
             {
+                // 생활용품이라는 key 값이 없으면 오류메세지 출력
                 System.out.println("해당 물류에 대한 정보가 없거나 출하할 수량이 없습니다");
             }
             System.out.println();
